@@ -1,0 +1,143 @@
+\documentclass[titlepage, a4paper]{article}
+\input{../mall/layout.tex}	% Importera generella layout-strukturer
+
+% Information nödvändig för generella layout-strukturer
+\newcommand{\LIPSgrupp}{50}
+\newcommand{\LIPSredaktor}{Martin Söderén}
+\newcommand{\LIPSversion}{0.1}
+\newcommand{\LIPSdokument}{Användarmanual}
+\newcommand{\LIPSdokumenttyp}{Användarmanual}
+\newcommand{\LIPSgranskatdatum}{-}
+\newcommand{\LIPSgranskare}{-}
+\newcommand{\LIPSgodkannare}{-}
+\newcommand{\LIPSgodkantdatum}{-}
+\newcommand{\LIPSkursnamn}{TSEA83}
+\newcommand{\LIPSprojektnamn}{PONG}
+\newcommand{\LIPSprojektgrupp}{Grupp 50}
+\newcommand{\LIPSartaltermin}{VT, 2016}
+\newcommand{\LIPSgrupphemsida}{https://gitlab.ida.liu.se/oskjo581/tsea83}
+\newcommand{\LIPSkund}{LIU}
+\newcommand{\LIPSkundkontakt}{-}
+\newcommand{\LIPSkursansvarig}{Anders Nilsson}
+\newcommand{\LIPShandledare}{Carl Ingemarsson}
+
+% Dokument-specifika paket
+\usepackage{tabularx}
+\usepackage{tikz}	
+\usepackage{amsmath}
+\usepackage{amsfonts}
+\usepackage{algorithm}
+\usepackage{algpseudocode}
+\usepackage{float}
+\usetikzlibrary{shapes, arrows}
+
+\pagenumbering{roman}
+
+\begin{document}
+
+\LIPSTitelsida
+
+\begin{LIPSprojektidentitet}
+	\LIPSgruppmedlem{Martin Söderén}{Senior Hardware design engineer}{070 816 32 41}{marso329@student.liu.se}
+	\LIPSgruppmedlem{Oskar Joelsson}{Junior Hardware design engineer}{076 185 17 17}{oskjo581@student.liu.se}
+	\LIPSgruppmedlem{Jesper Jakobsson}{Hardware design intern}{070 673 25 10}{jesja947@student.liu.se}
+\end{LIPSprojektidentitet}
+
+%\newpage
+%\tableofcontents	%Innehållsförteckning
+
+\newpage
+
+\begin{LIPSdokumenthistorik}
+\LIPSversionsinfo{0.1}{2016-02-16}{Första utkast}{Grupp 50}{}
+\end{LIPSdokumenthistorik}
+
+\newpage
+\pagenumbering{arabic}	%Påbörja sidnumrering
+\section{Controlunit}
+\subsection{FB-fält}
+\begin{table}[H]
+  \centering
+  \begin{tabular}{|l|l|l|l|}
+    \hline
+    \textbf{Värde} & \textbf{Skriver till} & \textbf{beskrivning} & \textbf{Testat} \\ \hline
+     001 & IR & Tar värdet på bussen och skriver det IR i control unit &- \\ \hline
+  010 & PM & Tar värdet på bussen och skriver det till den adress som ASR pekar på &- \\ \hline
+   011 & PC & Tar värdet på bussen och skriver det till PC &- \\ \hline
+     101 & ASR & Tar värdet på bussen och skriver det till ASR &- \\ \hline
+      Övriga & -- & Gör inget &- \\ \hline
+  \end{tabular}
+\end{table}
+Måste kolla hur det blir med enable signalerna då de nollas i FB om de andra enheterna hinner läsa av bussen.
+
+
+\subsection{TB-fält}
+\begin{table}[H]
+  \centering
+  \begin{tabular}{|l|l|l|l|}
+    \hline
+    \textbf{Värde} & \textbf{Läser från} & \textbf{beskrivning} & \textbf{Testat} \\ \hline
+     001 & IR & Tar värdet från IR och placerar det på bussen &- \\ \hline
+  010 & PM & Tar värdet ASr pekar på i PM och placerar det på bussen &- \\ \hline
+   011 & PC & Tar värdet i PC och placerar det på bussen &- \\ \hline
+      Övriga & -- & Gör inget &- \\ \hline
+  \end{tabular}
+\end{table}
+
+
+\section{BLOCK\_RAM}
+\subsection{pm\_enable}
+Vid pm\_enable=0 så läser/skriver PM från bussen.
+\subsection{pm\_write}
+Vid pm\_write=0 så läser pm från bussen och placerar det på den adress som ASR pekar på.
+Vid pm\_write 01 så skriver pm den data som ASR pekar på till bussen. 
+
+
+\section{Opkoder}
+\begin{table}[H]
+  \centering
+  \begin{tabular}{|l|l|l|l|}
+    \hline
+    \textbf{Instruktion} & \textbf{Opkod}  \\ \hline
+  LOAD GRx,M,ADR & 0000  \\ \hline
+   STORE GRx,M,ADR & 0001 \\ \hline
+    ADD GRx,M,ADR & 0010\\ \hline
+     SUB GRx,M,ADR & 0011  \\ \hline
+      AND GRx,M,ADR & 0100 \\ \hline
+       LSR GRx,M,Y & 0101 \\ \hline
+        BRA ADR & 0110 \\ \hline
+         BNE ADR & 0111 \\ \hline
+          HALT  & 1000 \\ \hline
+          STOREV GRx,M,ADR &1001  \\ \hline
+     		CMP GRx,M,ADR & 1010 \\ \hline
+     		BGE ADR & 1011 \\ \hline
+     		BEQ ADR & 1100  \\ \hline
+     		IN GRx & 1101  \\ \hline
+     		OUT GRx & 1110 \\ \hline
+  \end{tabular}
+  \caption{Opkoder}
+
+\end{table}
+
+\section{reset}
+\begin{table}[H]
+  \centering
+  \begin{tabular}{|l|l|l|l|}
+    \hline
+    \textbf{Variable} & \textbf{Nollas under reset i}  \\ \hline
+  IR & FB field process i control\_unit  \\ \hline
+  
+  pm\_enable & FB field process i control\_unit  \\ \hline
+  \end{tabular}
+  \caption{Opkoder}
+
+\end{table}
+
+\section{statusvippor}
+
+Z=1 då resultatet är noll vid add,sub,and,lsr och cmp.\\
+N= 1 vid sub då resultatet skulle bli negativt.\\
+O=1 då en addition leder till overflow\\
+C=1 då en addition leder till overflow
+
+\end{document}

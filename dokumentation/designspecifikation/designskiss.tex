@@ -1,0 +1,68 @@
+\documentclass[titlepage, a4paper]{article}
+\input{../mall/layout.tex}	% Importera generella layout-strukturer
+
+% Information nödvändig för generella layout-strukturer
+\newcommand{\LIPSgrupp}{50}
+\newcommand{\LIPSredaktor}{Martin Söderén}
+\newcommand{\LIPSversion}{0.1}
+\newcommand{\LIPSdokument}{Designskiss}
+\newcommand{\LIPSdokumenttyp}{Designskiss}
+\newcommand{\LIPSgranskatdatum}{-}
+\newcommand{\LIPSgranskare}{-}
+\newcommand{\LIPSgodkannare}{-}
+\newcommand{\LIPSgodkantdatum}{-}
+\newcommand{\LIPSkursnamn}{TSEA83}
+\newcommand{\LIPSprojektnamn}{PONG}
+\newcommand{\LIPSprojektgrupp}{Grupp 50}
+\newcommand{\LIPSartaltermin}{VT, 2016}
+\newcommand{\LIPSgrupphemsida}{https://gitlab.ida.liu.se/oskjo581/tsea83}
+\newcommand{\LIPSkund}{LIU}
+\newcommand{\LIPSkundkontakt}{-}
+\newcommand{\LIPSkursansvarig}{Anders Nilsson}
+\newcommand{\LIPShandledare}{Carl Ingemarsson}
+
+% Dokument-specifika paket
+\usepackage{tabularx}
+\usepackage{tikz}	
+\usepackage{amsmath}
+\usepackage{amsfonts}
+\usepackage{algorithm}
+\usepackage{algpseudocode}
+\usepackage{float}
+\usetikzlibrary{shapes, arrows}
+
+\pagenumbering{roman}
+
+\begin{document}
+
+\LIPSTitelsida
+
+\begin{LIPSprojektidentitet}
+	\LIPSgruppmedlem{Martin Söderén}{Senior Hardware design engineer}{070 816 32 41}{marso329@student.liu.se}
+	\LIPSgruppmedlem{Oskar Joelsson}{Junior Hardware design engineer}{076 185 17 17}{oskjo581@student.liu.se}
+	\LIPSgruppmedlem{Jesper Jakobsson}{Hardware design intern}{070 673 25 10}{jesja947@student.liu.se}
+\end{LIPSprojektidentitet}
+
+%\newpage
+%\tableofcontents	%Innehållsförteckning
+
+\newpage
+
+\begin{LIPSdokumenthistorik}
+\LIPSversionsinfo{0.1}{2016-02-16}{Första utkast}{Grupp 50}{Carl Ingemarsson}
+\LIPSversionsinfo{0.2}{2016-04-04}{Andra utkast}{Grupp 50}{}
+\end{LIPSdokumenthistorik}
+
+\newpage
+\pagenumbering{arabic}	%Påbörja sidnumrering
+
+\input{tex/kravspecifikation-inledning}
+
+\input{tex/kravspecifikation-analys}
+
+\input{tex/kravspecifikation-blockschema}
+
+
+\input{tex/kravspecifikation-milstolpe}
+
+\end{document}

@@ -1,0 +1,225 @@
+\usepackage[swedish]{babel}
+\usepackage[utf8]{inputenc}
+\usepackage{color}
+\usepackage{graphicx}
+\usepackage{etoolbox}
+\usepackage{stringenc}
+\usepackage{pdfescape}
+
+% Sidformat
+\usepackage{a4wide}
+
+% Fixa Appendix-titlar
+\usepackage[titletoc,title]{appendix}
+
+% Bättre tabeller
+\usepackage{tabularx}
+
+% Bättre bildtexter
+\usepackage[margin=10pt,font=small,labelfont=bf,labelsep=endash]{caption}
+
+% Enkelt kommando som låter mig attgöra-markera text
+\newcommand{\todo}[1] {\textbf{\textcolor{red}{#1}}}
+
+% Nytt \paragraph låter oss ha onumrerade bitar
+\makeatletter
+\renewcommand\paragraph{\@startsection{paragraph}{4}{\z@}%
+{-3.25ex\@plus -1ex \@minus -.2ex}%
+{1.5ex \@plus .2ex}%
+{\normalfont\normalsize\bfseries}}
+\makeatother
+
+\providecommand{\LIPSlogga}{../mall/logga1.png}
+\providecommand{\LIPSdatum}{\today}
+
+%% Headers och Footers
+\usepackage{fancyhdr}
+\pagestyle{fancy}
+\lhead{\includegraphics[scale=0.4]{\LIPSlogga}}
+\rhead{\ifdef{\LIPSutfardare}{Utfärdat av \LIPSutfardare \\\LIPSdatum}\LIPSdatum}
+\lfoot{\LIPSkursnamn \\ \LIPSdokumenttyp}
+\cfoot{\thepage}
+\rfoot{\LIPSprojektgrupp \\ \LIPSprojektnamn}
+
+%% Titelsida
+\newcommand{\LIPSTitelsida}{%
+{\ }\vspace{45mm}
+\begin{center}
+  \textbf{\Huge \LIPSdokument}
+\end{center}
+\begin{center}
+  {\Large Grupp: \LIPSgrupp}
+\end{center}
+\begin{center}
+  {\Large Redaktör: \LIPSredaktor}
+\end{center}
+\begin{center}
+  {\Large \textbf{Version \LIPSversion}}
+\end{center}
+\vfill
+\begin{center}
+  {\large Status}\\[1.5ex]
+  \begin{tabular}{|*{3}{p{40mm}|}}
+    \hline
+    Granskad & \LIPSgranskare & \LIPSgranskatdatum \\
+    \hline
+    Godkänd & \LIPSgodkannare & \LIPSgodkantdatum \\
+    \hline
+  \end{tabular}
+\end{center}
+\newpage
+}
+
+% Projektidentitet
+\newenvironment{LIPSprojektidentitet}{%
+{\ }\vspace{45mm}
+\begin{center}
+  {\Large PROJEKTIDENTITET}\\[0.5ex]
+  {\small
+  \LIPSartaltermin, \LIPSprojektgrupp\\
+  Linköpings Tekniska Högskola, IDA
+  }
+\end{center}
+\begin{center}
+  {\normalsize Gruppdeltagare}\\
+  \begin{tabular}{|l|l|p{25mm}|l|}
+    \hline
+    \textbf{Namn} & \textbf{Ansvar} & \textbf{Telefon} & \textbf{E-post} \\
+    \hline
+}%
+{%
+    \hline
+  \end{tabular}
+\end{center}
+\begin{center}
+  {\small
+    \ifdef{\LIPSgruppadress}{\textbf{E-postlista för hela gruppen}: \LIPSgruppadress\\}{}
+    \ifdef{\LIPSgrupphemsida}{\textbf{Hemsida}: \LIPSgrupphemsida\\[1ex]}{}
+    \ifdef{\LIPSkund}{\textbf{Kund}: \LIPSkund\\}{}
+    \ifdef{\LIPSkundkontakt}{\textbf{Kontaktperson hos kund}: \LIPSkundkontakt\\}{}
+    \ifdef{\LIPSkursansvarig}{\textbf{Kursansvarig}: \LIPSkursansvarig\\}{}
+    \ifdef{\LIPShandledare}{\textbf{Handledare}: \LIPShandledare\\}{}
+  }
+\end{center}
+\newpage
+}
+\newcommand{\LIPSgruppmedlem}[4]{\hline {#1} & {#2} & {#3} & {#4} \\}
+
+%% Dokumenthistorik
+\newenvironment{LIPSdokumenthistorik}{%
+\begin{center}
+  Dokumenthistorik\\[1ex]
+  %\begin{small}
+    \begin{tabular}{|l|l|p{60mm}|l|l|}
+      \hline
+      \textbf{Version} & \textbf{Datum} & \textbf{Utförda förändringar} & \textbf{Utförda av} & \textbf{Granskad} \\
+      }%
+    {%
+			\hline
+    \end{tabular}
+  %\end{small}
+\end{center}
+}
+
+\newcommand{\LIPSversionsinfo}[5]{\hline {#1} & {#2} & {#3} & {#4} & {#5} \\}
+
+% Kravlistor
+\newenvironment{LIPSkravlista}{
+	\center
+		\tabularx{\textwidth}{| p{1.2cm} | p{1.9cm} | X | c |}
+			\hline
+			\textbf{Krav} & \textbf{Förändring} & \textbf{Beskrivning} & \textbf{Prioritet} \\\hline
+}
+{
+		\endtabularx
+	\endcenter
+}
+
+\newcounter{LIPSkravnummer}
+\addtocounter{LIPSkravnummer}{1}
+\newcommand{\LIPSkrav}[4][Krav \arabic{LIPSkravnummer}]{{#1} & {#2} & {#3} & {#4} \stepcounter{LIPSkravnummer}\\\hline}
+
+
+% Leveranskravlistor
+\newenvironment{LIPSleveranskravlista}{
+	\center
+		\tabularx{\textwidth}{| p{1.2cm} | p{1.9cm} | X | X |}
+			\hline
+			\textbf{Krav} & \textbf{Förändring} & \textbf{Beskrivning} & \textbf{Deadline}\\\hline
+}
+{
+		\endtabularx
+	\endcenter
+}
+
+\newcounter{LIPSleveranskravnummer}
+\addtocounter{LIPSleveranskravnummer}{1}
+\newcommand{\LIPSleveranskrav}[4][Krav \arabic{LIPSkravnummer}]{{#1} & {#2} & {#3} & {#4} \stepcounter{LIPSkravnummer}\\\hline}
+
+
+% Milstolps-lista
+\newenvironment{LIPSmilstolpar}{
+	\center
+		\tabularx{\textwidth}{| p{1.2cm} | X | l |}
+			\hline
+			\textbf{Nr} & \textbf{Beskrivning} & \textbf{Datum} \\\hline
+}
+{
+		\endtabularx
+	\endcenter
+}
+
+\newcounter{LIPSstolpnummer}
+\addtocounter{LIPSstolpnummer}{1}
+%\newcommand{\LIPSmilstolpe}[3][Krav \arabic{LIPSstolpnummer}]{{#1} & {#2} & {#3} \stepcounter{LIPSstolpnummer}\\\hline}
+\newcommand{\LIPSmilstolpe}[3]{{#1} & {#2} & {#3} \\\hline}
+
+% Aktivitets-lista
+\newenvironment{LIPSaktivitetslista}{
+	\center
+		\tabularx{\textwidth}{| p{0.3cm} | X | c | c | c |}
+			\hline
+			\textbf{Nr} & \textbf{Beskrivning} & \textbf{Beroende av} & \textbf{Timmar} & \textbf{datum} \\\hline
+}
+{
+		\endtabularx
+	\endcenter
+}
+
+\newcounter{LIPSaktivitetsnummer}
+\addtocounter{LIPSaktivitetsnummer}{1}
+% \newcommand{\LIPSaktivitet}[4][\arabic{LIPSstolpnummer}]{{#1} & {#2} & {#3} & {#4} \stepcounter{LIPSstolpnummer}\\\hline}
+\newcommand{\LIPSaktivitet}[5]{{#1} & {#2} & {#3} & {#4} & {#5}\\\hline}
+
+% Mall för mötesprotokoll
+\newenvironment{projektmote}[2]{
+  {\ }\vspace{5mm}
+
+  \centerline{\textbf{\Huge #1}}
+  \vspace{2mm}
+  \centerline{\LARGE #2}
+  \vspace{10mm}
+
+  \begin{itemize}
+}
+{
+  \end{itemize}
+}
+
+\newcounter{paragrafnummer}
+\addtocounter{paragrafnummer}{1}
+\newcommand{\paragraf}[1]{\item{\textsection \arabic{paragrafnummer}. {#1}}\addtocounter{paragrafnummer}{1}}
+
+% Mall för Statusrapport
+\newenvironment{statusrapport}{
+  \center
+    \tabularx{\textwidth}{| p{0.4cm} | X | X | p{14.5mm} | p{13.5mm} | p{16.5mm} | p{16.5mm} |}
+    \hline
+    \textbf{Nr} & \textbf{Aktivitet} & \textbf{Beroenden} & \textbf{Planerad tid} & \textbf{Nedlagd tid} & \textbf{Planerad klar} & \textbf{Beräknat klart} \\\hline
+}
+{
+    \endtabularx
+  \endcenter
+}
+
+\newcommand{\aktivitetstatus}[7]{{#1} & {#2} & {#3} & {#4} & {#5} & {#6} & {#7} \\\hline}

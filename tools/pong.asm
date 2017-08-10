@@ -1,0 +1,12 @@
+
+SET	10	0010	; pos x
+SET	11	0800	; pos y
+
+INIT:
+LOAD	G0	10	;
+LOAD	G1	11	;
+
+
+START:
+STOREV	G0	@10
+STOREV	G1	@11

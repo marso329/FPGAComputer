@@ -1,0 +1,10 @@
+\section{Slutsatser}
+
+
+Att välja analoga reglage till styrmedel tog kanske upp för mycket tid. Det var svårt att få dem att ansluta korrekt mellan varandra. Synkroniseringen mellan de analoga spakarna genom mux och avkodare vart nästintill omöjligt att få ett bra resultat ifrån. Eftersom det blev lite tidsbrist på slutet, ersattes den egna komponenten med en arduino som var länken från reglagen och fpga-kortet. Hade ett reglage med den exempelvis SPI använts hade de antagligen underlättat. Men gruppen valde analoga spakar och en egengjord modul för att det var mer av en rolig uppgift. Resultatet blev relativt spelvänligt, samt ett roligare projekt.
+\\
+Ett stort problem som gav många timmars felsökning var datorns problem med första blocket av grafikminnet. Lösningen blev att förskjuta allt med ett block, tyvärr fanns inte tid att felsöka vidare för att hitta den egentliga anledningen till problemet. 
+\\
+Lagringen för grafikminnet var genomtänkt från början men glömdes lite bort, då det inte var allt för aktuellt innan själva datorn fungerade. För att lösa detta hade vi en operand \'storev\', som fungerar utmärkt men blev troligtvis mer komplex än om åtanke hur de olika delarna av processorn skulle fylla samt avläsa grafikminnet gjorts tidigare. För att skriva till grafikminnet körs olika instruktioner som är uppdelade i x-position, y-position och färg. 
+\\
+Det som begränsade oss för att avklara bör-kraven, var storleken på data/programminnet. I nuläget används alla 256 rader, och det finns alltså ingen möjlighet att lägga in fler funktioner.
